@@ -28,7 +28,7 @@ import {
 } from '../../@gkit/gkit.js'
 
 export let app:App = async (path, canvas) => {
-    let g = gfx(canvas(1000, 1000))
+    let g = gfx(canvas(1000 * 0.5, 1000 * 0.5))
     let buf = g.buffer({
         depth: true
     })
@@ -99,10 +99,10 @@ export let app:App = async (path, canvas) => {
                 })
             })
         })
-        blit(buf, droidez)
+        blit(buf, droidez, 0, 0, { width:g.width(), height:g.height() })
         blit(buf, beatmemo)
         g.flush(buf)
     }
 }
 
-export let main = () => run(app)
+export let main = () => record(app)
