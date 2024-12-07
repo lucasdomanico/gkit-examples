@@ -2,7 +2,9 @@ import {
     gfx,
     image,
     App,
-    run
+    run,
+    blit,
+    record
 } from '../../@gkit/gkit.js'
 
 export let flow = `
@@ -83,13 +85,14 @@ export let mist = displace + `
 `
 
 export let app:App = async (path, canvas) => {
-    let g = gfx(canvas(1920, 1080))
+    let g = gfx(canvas(1920 * 0.5, 1080 * 0.5))
     let bg = g.texture(await image(path + 'bg.png'))
     let dispbg = g.texture(await image(path + 'displace.png'))
     let lights = g.texture(await image(path + 'lights.png'))
     let lennon = g.texture(await image(path + 'lennon.png'))
     let displace_lennon = g.texture(await image(path + 'displace_lennon.png'))
     let front = g.texture(await image(path + 'front.png'))
+    let sign = g.texture(await image('droidez.png'))
     let buf = g.buffer()
     let gbuf = g.buffer()
     return async (input) => {
@@ -193,8 +196,9 @@ export let app:App = async (path, canvas) => {
                 }
             `
         })
+        blit(gbuf, sign, 0, 0, { width:g.width(), height:g.height() })
         g.flush(gbuf)
     }
 }
 
-export let main = () => run(app)
+export let main = () => record(app)
